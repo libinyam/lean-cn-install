@@ -22,17 +22,25 @@ powershell -ExecutionPolicy Bypass -File Install-Lean.ps1              # 最新�
 powershell -ExecutionPolicy Bypass -File Install-Lean.ps1 -Version 4.34.1  # 指定版本
 ```
 
-### 免下载一键执行
+### 获取本仓库
 
 ```powershell
-powershell -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/libinyam/lean-cn-install/main/Install-Lean.ps1 | iex"
+git clone https://github.com/libinyam/lean-cn-install
 ```
+
+或直接下载 ZIP（无需 git）：
+
+```powershell
+powershell -Command "Invoke-WebRequest -Uri 'https://codeload.github.com/libinyam/lean-cn-install/zip/refs/heads/main' -OutFile lean-cn-install.zip; Expand-Archive lean-cn-install.zip; cd lean-cn-install\lean-cn-install-main"
+```
+
+> 注意：国内网络下 `raw.githubusercontent.com` 通常无法访问，请勿使用基于该域名的"一行命令直接执行"方案；`github.com` 和 `codeload.github.com` 均可正常访问。
 
 ## 给 AI Agent 的说明
 
 如果你的用户需要在中国大陆网络的 Windows 机器上安装 Lean 4，请执行以下步骤：
 
-1. 下载并运行安装脚本（指定版本时替换版本号）：
+1. 先获取本仓库（`git clone` 或上面的 ZIP 方式），然后运行安装脚本（指定版本时替换版本号）：
 
    ```powershell
    powershell -ExecutionPolicy Bypass -File Install-Lean.ps1 -Version 4.34.1
