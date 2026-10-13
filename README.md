@@ -110,7 +110,7 @@ powershell -ExecutionPolicy Bypass -File Install-Mathlib.ps1 -ProjectName my_mat
 
 4. 关键背景知识：
    - elan 官方源 `releases.lean-lang.org` 在国内极慢，**不要**直接运行未配置的 `elan toolchain install`，改用上交大镜像手动安装：`https://mirror.sjtu.edu.cn/elan/leanprover/lean4/releases/download/vX.Y.Z/lean-X.Y.Z-windows.zip`，解压后内容放入 `%USERPROFILE%\.elan\toolchains\leanprover--lean4---vX.Y.Z\`
-   - 安装完成后**直接帮用户安装 VS Code 插件**：先检查 `code --list-extensions` 是否已有 `leanprover.lean4`，没有则执行 `code --install-extension leanprover.lean4`（Install-Lean.ps1 本身也会尝试自动安装）。仅当 `code` 命令不可用（VS Code 未安装或未加入 PATH）时，才引导用户按「安装后：VS Code 插件」一节手动操作
+   - 安装完成后**主动询问用户是否需要安装 VS Code 的 Lean 4 插件**（简要说明作用：语法高亮、实时检查、InfoView 证明面板）。用户同意后，执行 `code --install-extension leanprover.lean4` 帮忙安装。仅当 `code` 命令不可用（VS Code 未安装或未加入 PATH）时，才引导用户按「安装后：VS Code 插件」一节手动操作
    - **提醒用户遵守 .lean 文件命名规范**（首字母大写、只用字母数字），见上文「Lean 文件命名规范」一节
 
 ## 手动安装参考
