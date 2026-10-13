@@ -36,6 +36,18 @@ powershell -Command "Invoke-WebRequest -Uri 'https://codeload.github.com/libinya
 
 > 注意：国内网络下 `raw.githubusercontent.com` 通常无法访问，请勿使用基于该域名的"一行命令直接执行"方案；`github.com` 和 `codeload.github.com` 均可正常访问。
 
+## 常见问题
+
+**新开终端提示找不到 `lean` / `elan` 命令？**
+
+elan 安装时会把 `%USERPROFILE%\.elan\bin` 写入用户 PATH，但**已经打开的终端和程序不会自动刷新环境变量**。解决办法（任选其一）：
+
+- 关掉终端重新打开（最简单）
+- VS Code 里按 `Ctrl+Shift+P` → `Developer: Reload Window`，或直接重启 VS Code
+- 都不生效就注销/重启一次电脑
+
+若重装后仍找不到，检查系统环境变量 Path 里是否有 `C:\Users\<用户名>\.elan\bin`。
+
 ## 安装后：VS Code 插件（必装）
 
 Lean 装好后，还需要在 VS Code 里安装 **Lean 4 插件** 才能获得语法高亮、实时检查、InfoView 证明状态面板等功能。脚本会尝试自动安装（检测到 VS Code 时）；如果没有自动装上，手动安装方法如下：
@@ -112,6 +124,7 @@ powershell -ExecutionPolicy Bypass -File Install-Mathlib.ps1 -ProjectName my_mat
    - elan 官方源 `releases.lean-lang.org` 在国内极慢，**不要**直接运行未配置的 `elan toolchain install`，改用上交大镜像手动安装：`https://mirror.sjtu.edu.cn/elan/leanprover/lean4/releases/download/vX.Y.Z/lean-X.Y.Z-windows.zip`，解压后内容放入 `%USERPROFILE%\.elan\toolchains\leanprover--lean4---vX.Y.Z\`
    - 安装完成后**主动询问用户是否需要安装 VS Code 的 Lean 4 插件**（简要说明作用：语法高亮、实时检查、InfoView 证明面板）。用户同意后，执行 `code --install-extension leanprover.lean4` 帮忙安装。仅当 `code` 命令不可用（VS Code 未安装或未加入 PATH）时，才引导用户按「安装后：VS Code 插件」一节手动操作
    - **提醒用户遵守 .lean 文件命名规范**（首字母大写、只用字母数字），见上文「Lean 文件命名规范」一节
+   - 若安装后终端提示找不到 `lean`/`elan`，是 PATH 未刷新，见上文「常见问题」一节
 
 ## 手动安装参考
 
