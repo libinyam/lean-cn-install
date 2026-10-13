@@ -36,6 +36,37 @@ powershell -Command "Invoke-WebRequest -Uri 'https://codeload.github.com/libinya
 
 > 注意：国内网络下 `raw.githubusercontent.com` 通常无法访问，请勿使用基于该域名的"一行命令直接执行"方案；`github.com` 和 `codeload.github.com` 均可正常访问。
 
+## 安装后：VS Code 插件（必装）
+
+Lean 装好后，还需要在 VS Code 里安装 **Lean 4 插件** 才能获得语法高亮、实时检查、InfoView 证明状态面板等功能。脚本会尝试自动安装（检测到 VS Code 时）；如果没有自动装上，手动安装方法如下：
+
+**方法一：图形界面（推荐新手）**
+
+1. 打开 VS Code
+2. 点左侧边栏的**扩展图标**（四个方块，或按 `Ctrl+Shift+X`）
+3. 搜索框输入 `lean4`
+4. 找到发布者为 **leanprover** 的 `Lean 4` 扩展，点 **Install**
+
+**方法二：命令行**
+
+```powershell
+code --install-extension leanprover.lean4
+```
+
+安装后**重启 VS Code**，打开任意 `.lean` 文件，右下角出现 `lean4` 字样、右侧 InfoView 面板能显示信息，即为成功。若启动时卡在 "Checking Lean version" 超过 20 秒，说明默认工具链没固定，执行 `elan default leanprover/lean4:vX.Y.Z`（本脚本已自动处理）。
+
+## Lean 文件命名规范
+
+新建练习/项目文件时请遵守：
+
+- **后缀必须是 `.lean`**，否则插件不会启用
+- **文件名首字母大写**：`Test.lean`、`MyProof.lean` ✅；`test.lean` ❌
+- **只用字母和数字**：不要出现连字符、空格、下划线开头等——`lean-1.lean`、`my proof.lean` 这类名字在做项目时会导致模块名非法
+- **多单词用大驼峰**：`NatLemmas.lean`、`BasicAlgebra.lean`
+- 项目里**文件路径即模块名**：`MyProject/Basic/Lemmas.lean` 对应 `import MyProject.Basic.Lemmas`，所以目录名同样要遵守上述规则
+
+单个随手练习的文件不遵守也能跑，但建议从一开始就养成习惯。
+
 ## 安装 Mathlib（可选，先读这段再决定）
 
 Mathlib 是 Lean 社区维护的**数学库**，收录了从线性代数到拓扑学的大量已证明定理，以及一批强大的自动化 tactic（`ring` 自动证等式、`linarith` 自动解线性不等式、`simp` 自动化简等）。做正式的数学形式化基本绕不开它。
@@ -79,7 +110,8 @@ powershell -ExecutionPolicy Bypass -File Install-Mathlib.ps1 -ProjectName my_mat
 
 4. 关键背景知识：
    - elan 官方源 `releases.lean-lang.org` 在国内极慢，**不要**直接运行未配置的 `elan toolchain install`，改用上交大镜像手动安装：`https://mirror.sjtu.edu.cn/elan/leanprover/lean4/releases/download/vX.Y.Z/lean-X.Y.Z-windows.zip`，解压后内容放入 `%USERPROFILE%\.elan\toolchains\leanprover--lean4---vX.Y.Z\`
-   - VS Code 需要安装 `leanprover.lean4` 扩展
+   - 安装完成后**主动提醒用户安装 VS Code 的 `leanprover.lean4` 扩展**，详细步骤见上文「安装后：VS Code 插件」一节
+   - **提醒用户遵守 .lean 文件命名规范**（首字母大写、只用字母数字），见上文「Lean 文件命名规范」一节
 
 ## 手动安装参考
 

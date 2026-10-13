@@ -1,4 +1,4 @@
-# Install-Lean.ps1 — 一键安装 Lean 4（走上海交大镜像，避免官方源龟速）
+﻿# Install-Lean.ps1 — 一键安装 Lean 4（走上海交大镜像，避免官方源龟速）
 # 用法：
 #   双击"一键安装Lean.bat"          —— 安装最新稳定版
 #   或在终端里指定版本：
@@ -77,6 +77,17 @@ try {
     $env:PATH = "$ElanDir\bin;$env:PATH"
     $verOut = & lean --version 2>&1
     if ($LASTEXITCODE -ne 0) { Fail "验证失败：lean --version 执行出错" }
+    # ---------- 6. 尝试自动安装 VS Code Lean 4 插件 ----------
+    $codeCmd = Get-Command code -ErrorAction SilentlyContinue
+    if ($codeCmd) {
+        Info "检测到 VS Code，正在安装 Lean 4 插件..."
+        & code --install-extension leanprover.lean4 2>&1 | Out-Null
+        if ($LASTEXITCODE -eq 0) { Ok "VS Code Lean 4 插件安装完成（重启 VS Code 生效）" }
+        else { Warn "插件自动安装失败，请手动安装：code --install-extension leanprover.lean4" }
+    } else {
+        Warn "未检测到 VS Code 命令行，请自行安装 VS Code 并在扩展商店搜索安装 leanprover.lean4"
+    }
+
     Ok "安装完成！$verOut"
     Write-Host ""
     Write-Host "提示：VS Code 里装 leanprover.lean4 插件后打开 .lean 文件即可使用。" -ForegroundColor Yellow
